@@ -1,0 +1,9 @@
+DEPENDENCIES
+  flasky-cookbook
+    path: .
+    metadata: true
+
+GRAPH
+  apt (2.9.2)
+  flasky-cookbook (0.1.0)
+    apt (~> 2.9.2)
