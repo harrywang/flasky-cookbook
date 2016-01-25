@@ -1,0 +1,9 @@
+server {
+    listen <%= node['flasky-cookbook']['server_port'] %>;
+    server_name <%= node['flasky-cookbook']['server_name'] %>;
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:<%= node['flasky-cookbook']['gunicorn_socket'] %>;
+    }
+}

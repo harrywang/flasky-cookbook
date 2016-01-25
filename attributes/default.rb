@@ -1,30 +1,30 @@
 # # general settings
-# default['thena-infra']['app_name'] = 'Thena'
+# default['flasky-cookbook']['app_name'] = 'Thena'
 # default['flasky-cookbook']['project_root'] = '/srv/www/'
 default['flasky-cookbook']['project_dir'] = '/srv/www/flasky/'
-# default['thena-infra']['app_dir'] = '/srv/www/thena/current/thena/' # AWS uses current
-default['flasky-cookbook']['config_dir'] = '/etc/flasky/' # Must update app if this changes
+# default['flasky-cookbook']['app_dir'] = '/srv/www/thena/current/thena/' # AWS uses current
+# default['flasky-cookbook']['config_dir'] = '/etc/flasky/' # Must update app if this changes
 #
-# # nginx settings
-# default['thena-infra']['server_port'] = '80'
-# # default['thena-infra']['server_name'] = 'thena.io'
-# default['thena-infra']['server_name'] = '0.0.0.0' # Local chef development
-# default['thena-infra']['nginx_logfile'] = '/var/log/nginx/access.log' # default
-# default['thena-infra']['nginx_errorfile'] = '/var/log/nginx/error.log' # default
-# default['thena-infra']['nginx_user'] = 'www-data' # default
-# default['thena-infra']['nginx_group'] = 'www-data'
-# default['thena-infra']['uwsgi_socket'] = '/tmp/thena.sock'
+# nginx settings
+default['flasky-cookbook']['server_port'] = '80'
+# default['flasky-cookbook']['server_name'] = 'thena.io'
+default['flasky-cookbook']['server_name'] = '0.0.0.0' # Local chef development
+# default['flasky-cookbook']['nginx_logfile'] = '/var/log/nginx/access.log' # default
+# default['flasky-cookbook']['nginx_errorfile'] = '/var/log/nginx/error.log' # default
+# default['flasky-cookbook']['nginx_user'] = 'www-data' # default
+# default['flasky-cookbook']['nginx_group'] = 'www-data'
+default['flasky-cookbook']['gunicorn_socket'] = '/tmp/flasky.sock'
 #
 # # uwsgi settings
-# default['thena-infra']['uwsgi_module'] = 'wsgi:app'
-# # default['thena-infra']['uwsgi_user'] = 'ubuntu'
-# default['thena-infra']['uwsgi_user'] = 'vagrant' # Local chef development
-# default['thena-infra']['uwsgi_group'] = 'www-data'
-# default['thena-infra']['uwsgi_log_dir'] = '/var/log/uwsgi/'
-# default['thena-infra']['uwsgi_logfile'] = '/var/log/uwsgi/uwsgi.log'
-# default['thena-infra']['uwsgi_pidfile'] = '/var/tmp/uwsgi-app.pid'
+# default['flasky-cookbook']['uwsgi_module'] = 'wsgi:app'
+# default['flasky-cookbook']['gunicorn_user'] = 'ubuntu'
+default['flasky-cookbook']['gunicorn_user'] = 'vagrant' # Local chef development
+default['flasky-cookbook']['gunicorn_group'] = 'www-data'
+# default['flasky-cookbook']['uwsgi_log_dir'] = '/var/log/uwsgi/'
+# default['flasky-cookbook']['uwsgi_logfile'] = '/var/log/uwsgi/uwsgi.log'
+# default['flasky-cookbook']['uwsgi_pidfile'] = '/var/tmp/uwsgi-app.pid'
 #
 # # # git settings
-# # default['thena-infra']['git_repo_uri'] = 'git@github.com:kronosapiens/thena.git'
-# # default['thena-infra']['ssh_wrapper'] = 'git-ssh-wrapper.sh'
-# # default['thena-infra']['ssh_key'] = 'thena-repo.pem'
+# # default['flasky-cookbook']['git_repo_uri'] = 'git@github.com:kronosapiens/thena.git'
+# # default['flasky-cookbook']['ssh_wrapper'] = 'git-ssh-wrapper.sh'
+# # default['flasky-cookbook']['ssh_key'] = 'thena-repo.pem'
