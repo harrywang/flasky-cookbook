@@ -1,0 +1,7 @@
+{
+  "MAIL_SERVER": "email-smtp.us-east-1.amazonaws.com",
+  "MAIL_USERNAME": "AKIAJ6NFIS3SHABI3DJQ",
+  "MAIL_PASSWORD": "Ar7iG5RIYCVyxADVDdckG5bGLBPorLlZeP+c8J7P4siy",
+  "FLASKY_MAIL_SENDER": "Flasky <support@flasky.com>",
+  "FLASK_ADMIN": "harryjwang@gmail.com"
+}

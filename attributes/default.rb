@@ -1,9 +1,8 @@
 # # general settings
 # default['flasky-cookbook']['app_name'] = 'flasky'
-default['flasky-cookbook']['project_root'] = '/srv/www/'
+default['flasky-cookbook']['project_root'] = '/srv/www'
 # default['flasky-cookbook']['project_dir'] = '/srv/www/flasky/'
-default['flasky-cookbook']['app_dir'] = '/srv/www/flasky/' # AWS uses current
-# default['flasky-cookbook']['config_dir'] = '/etc/flasky/' # Must update app if this changes
+default['flasky-cookbook']['app_dir'] = '/srv/www/flasky' # AWS uses current
 
 # nginx settings
 default['flasky-cookbook']['server_port'] = '80'
@@ -16,10 +15,10 @@ default['flasky-cookbook']['nginx_group'] = 'www-data'
 default['flasky-cookbook']['gunicorn_socket'] = '/tmp/flasky.sock'
 
 # gunicorn settings
-# default['flasky-cookbook']['gunicorn_user'] = 'ubuntu'
+# default['flasky-cookbook']['gunicorn_user'] = 'ubuntu' # AWS OpsWorks
 default['flasky-cookbook']['gunicorn_user'] = 'vagrant' # Local chef development
 default['flasky-cookbook']['gunicorn_group'] = 'www-data'
-default['flasky-cookbook']['gunicorn_log_dir'] = '/var/log/gunicorn/'
+default['flasky-cookbook']['gunicorn_log_dir'] = '/var/log/gunicorn'
 default['flasky-cookbook']['gunicorn_logfile'] = '/var/log/gunicorn/gunicorn.log'
 
 # git settings

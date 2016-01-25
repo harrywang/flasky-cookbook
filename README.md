@@ -6,7 +6,7 @@ I am trying to make flasky (https://github.com/miguelgrinberg/flasky) work with 
 Lots of code in this repo is based on the following one:
 https://github.com/kronosapiens/chef-repo
 
-For the basic setup for the first tutorial, see README at https://github.com/harrywang/flask-gunicorn-nginx
+For the basic setup for the first tutorial, see README at (lots of useful information) https://github.com/harrywang/flask-gunicorn-nginx
 
 Note to make Flasky working locally:
 
@@ -16,6 +16,12 @@ Note to make Flasky working locally:
 exec gunicorn --workers 3 --bind unix:<%= node['flasky-cookbook']['gunicorn_socket'] %> -m 007 manage:app`,
 
 3. make sure to use double quote in command and resource names so that attribute variables can be used. Single quotes created problems.
+
+4. setup logging for gunicorn by adding `--log-file <%= node['flasky-cookbook']['gunicorn_logfile']%>`
+
+5. change sqlite database permission - we use vagrant:www_data to start gunicorn so that we need to assign vagrant:www_data to the database file and its parent folder (refer to this article for Unix permissions: http://kronosapiens.github.io/blog/2015/08/11/understanding-unix-permissions.html) - somehow I have to have two separate execute blocks otherwise only the second one is executed.
+
+6. add environment variables by adding `environments_path: test/environments` in .kitchen.yml and use `printenv` to check
 
 
 Other useful notes:

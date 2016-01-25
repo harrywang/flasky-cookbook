@@ -5,6 +5,7 @@ driver:
     - ["forwarded_port", {guest: 80, host: 8888}]
 provisioner:
   name: chef_solo
+  environments_path: test/environments
 
 platforms:
   - name: ubuntu-14.04
