@@ -63,48 +63,45 @@ end
 #    source 'thena-uwsgi.conf.erb'
 # end
 #
-# template "#{node['thena-infra']['config_dir']}thena-uwsgi.ini" do
+# template "#{node['flasky-cookbook']['config_dir']}thena-uwsgi.ini" do
 #    source 'thena-uwsgi.ini.erb'
 # end
 #
-# template "#{node['thena-infra']['config_dir']}newrelic.ini" do
-#    source 'newrelic.ini.erb'
-# end
 #
-# # set up logging
-# # nginx
-# file node['thena-infra']['nginx_logfile'] do
+# set up logging
+# nginx
+file node['flasky-cookbook']['nginx_logfile'] do
+    mode '0644'
+    owner node['flasky-cookbook']['nginx_user']
+    group node['flasky-cookbook']['nginx_group']
+end
+
+file node['flasky-cookbook']['nginx_errorfile'] do
+    mode '0644'
+    owner node['flasky-cookbook']['nginx_user']
+    group node['flasky-cookbook']['nginx_group']
+end
+
+# gunicorn
+directory node['flasky-cookbook']['gunicorn_log_dir'] do
+  recursive true
+end
+
+file node['flasky-cookbook']['gunicorn_logfile'] do
+    mode '0644'
+    owner node['flasky-cookbook']['gunicorn_user']
+    group node['flasky-cookbook']['gunicorn_group']
+end
+#
+# file node['flasky-cookbook']['uwsgi_pidfile'] do
 #     mode '0644'
-#     owner node['thena-infra']['nginx_user']
-#     group node['thena-infra']['nginx_group']
+#     owner node['flasky-cookbook']['uwsgi_user']
+#     group node['flasky-cookbook']['uwsgi_group']
 # end
-#
-# file node['thena-infra']['nginx_errorfile'] do
-#     mode '0644'
-#     owner node['thena-infra']['nginx_user']
-#     group node['thena-infra']['nginx_group']
-# end
-#
-# # uwsgi
-# directory node['thena-infra']['uwsgi_log_dir'] do
-#   recursive true
-# end
-#
-# file node['thena-infra']['uwsgi_logfile'] do
-#     mode '0644'
-#     owner node['thena-infra']['uwsgi_user']
-#     group node['thena-infra']['uwsgi_group']
-# end
-#
-# file node['thena-infra']['uwsgi_pidfile'] do
-#     mode '0644'
-#     owner node['thena-infra']['uwsgi_user']
-#     group node['thena-infra']['uwsgi_group']
-# end
-#
-# # start nginx
-# # note: start as sudo, will spawn child processes w/ www-data owner
-# service 'nginx' do
-#   supports :status => true
-#   action [:enable, :start]
-# end
+
+# start nginx
+# note: start as sudo, will spawn child processes w/ www-data owner
+service 'nginx' do
+  supports :status => true
+  action [:enable, :start]
+end

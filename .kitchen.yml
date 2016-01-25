@@ -1,7 +1,8 @@
 ---
 driver:
   name: vagrant
-
+  network:
+    - ["forwarded_port", {guest: 80, host: 8888}]
 provisioner:
   name: chef_solo
 
@@ -11,5 +12,5 @@ platforms:
 suites:
   - name: default
     run_list:
-        - recipe[flasky-cookbook::configure]
+        - recipe[flasky-cookbook::default]
     attributes:

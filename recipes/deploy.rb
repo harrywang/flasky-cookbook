@@ -1,27 +1,21 @@
+# include_recipe 'deploy::default'
+# node[:deploy].each do |application, deploy|
+#   opsworks_deploy_dir do
+#     user deploy[:user]
+#     group deploy[:group]
+#     path deploy[:deploy_to]
+#   end
 #
-# Cookbook Name:: thena-infra
-# Recipe:: deploy
-#
-# Copyright (c) 2015 Daniel Kronovet, All Rights Reserved.
+#   opsworks_deploy do
+#     deploy_data deploy
+#     app application
+#   end
+# end
 
-include_recipe 'deploy::default'
-node[:deploy].each do |application, deploy|
-  opsworks_deploy_dir do
-    user deploy[:user]
-    group deploy[:group]
-    path deploy[:deploy_to]
-  end
-
-  opsworks_deploy do
-    deploy_data deploy
-    app application
-  end
-end
-
-execute 'update packages' do
-    cwd node['thena-infra']['app_dir']
-    command 'pip install -r requirements.txt'
-end
+# execute 'update packages' do
+#     cwd node['thena-infra']['app_dir']
+#     command 'pip install -r requirements.txt'
+# end
 
 # ## FOR TESTING IN TEST KITCHEN
 # python_pip 'uwsgi'
@@ -39,7 +33,7 @@ end
 # end
 # ## / END TESTING
 
-service 'thena-uwsgi' do
+service 'myapp' do
   provider Chef::Provider::Service::Upstart
   supports :status => true
   action [:restart]
