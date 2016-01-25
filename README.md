@@ -9,3 +9,16 @@ https://github.com/kronosapiens/chef-repo
 For the basic setup for the first tutorial, see README at https://github.com/harrywang/flask-gunicorn-nginx
 
 Note to make Flasky working locally:
+
+1. get flasky code from github and set it up using root (I am not sure whether this is the right way of doing this - I had to use sudo to run those commands) - NOTE that the commands cannot be put in one execute block - separate them into different blocks to make sure the previous commands must be completed before running the next one.
+
+2. given the way flasky is configured, the gunicorn start command needs to be changed to `chdir <%= node['flasky-cookbook']['app_dir'] %>
+exec gunicorn --workers 3 --bind unix:<%= node['flasky-cookbook']['gunicorn_socket'] %> -m 007 manage:app`,
+
+3. make sure to use double quote in command and resource names so that attribute variables can be used. Single quotes created problems.
+
+
+Other useful notes:
+- to see the changes at  http://127.0.0.1:8888 in local browser, the cache needs to be cleaned.
+- to check upstart log: `cd /var/log/upstart/`
+- you can login to test by using `curl http://127.0.0.1`

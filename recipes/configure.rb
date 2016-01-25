@@ -1,8 +1,7 @@
 include_recipe 'apt::default'
 #
 #package 'build-essential'
-#package 'git'
-#
+package 'git'
 package 'python-pip'
 package 'python-dev'
 package 'curl' # no need in production
@@ -16,7 +15,7 @@ package 'nginx'
 # package 'postgresql-client'
 
 # create app directories
-directory node['flasky-cookbook']['project_dir'] do
+directory node['flasky-cookbook']['project_root'] do
   recursive true
 end
 
@@ -29,45 +28,18 @@ execute 'install packages' do
     command 'pip install gunicorn flask'
 end
 
-# install an application file - note: file name cannot contain hyphen
-template "#{node['flasky-cookbook']['project_dir']}/myapp.py" do
-  source "myapp.erb"
-end
-
-template "#{node['flasky-cookbook']['project_dir']}/wsgi.py" do
-  source "wsgi.erb"
-end
-
-template "/etc/init/myapp.conf" do
+template "/etc/init/flasky.conf" do
    source 'flasky-gunicorn.conf.erb'
 end
 
-template "/etc/nginx/sites-available/myapp" do
+template "/etc/nginx/sites-available/flasky" do
    source 'flasky-nginx.conf.erb'
 end
 
-link '/etc/nginx/sites-enabled/myapp' do
-  to '/etc/nginx/sites-available/myapp'
+link '/etc/nginx/sites-enabled/flasky' do
+  to '/etc/nginx/sites-available/flasky'
 end
 
-# # copy config files
-# template "/etc/nginx/sites-available/flasky" do
-#    source 'flasky-nginx.erb'
-# end
-#
-# link '/etc/nginx/sites-enabled/thena' do
-#   to '/etc/nginx/sites-available/thena'
-# end
-#
-# template "/etc/init/thena-uwsgi.conf" do
-#    source 'thena-uwsgi.conf.erb'
-# end
-#
-# template "#{node['flasky-cookbook']['config_dir']}thena-uwsgi.ini" do
-#    source 'thena-uwsgi.ini.erb'
-# end
-#
-#
 # set up logging
 # nginx
 file node['flasky-cookbook']['nginx_logfile'] do
@@ -92,12 +64,6 @@ file node['flasky-cookbook']['gunicorn_logfile'] do
     owner node['flasky-cookbook']['gunicorn_user']
     group node['flasky-cookbook']['gunicorn_group']
 end
-#
-# file node['flasky-cookbook']['uwsgi_pidfile'] do
-#     mode '0644'
-#     owner node['flasky-cookbook']['uwsgi_user']
-#     group node['flasky-cookbook']['uwsgi_group']
-# end
 
 # start nginx
 # note: start as sudo, will spawn child processes w/ www-data owner

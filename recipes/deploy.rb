@@ -12,33 +12,32 @@
 #   end
 # end
 
-# execute 'update packages' do
-#     cwd node['thena-infra']['app_dir']
-#     command 'pip install -r requirements.txt'
-# end
+# Get flasky code from github
+execute "get flasky code" do
+    user "root"
+    cwd node['flasky-cookbook']['project_root']
+    command "git clone #{node['flasky-cookbook']['git_repo_uri']}"
+end
 
-# ## FOR TESTING IN TEST KITCHEN
-# python_pip 'uwsgi'
+execute "install flasky requirements" do
+    user "root"
+    cwd node['flasky-cookbook']['app_dir']
+    command "pip install -r requirements/dev.txt"
+end
 
-# directory node['thena-infra']['app_dir'] do
-#   recursive true
-# end
+execute "setup flasky database" do
+    user "root"
+    cwd node['flasky-cookbook']['app_dir']
+    command "python manage.py deploy"
+end
 
-# file "#{node['thena-infra']['app_dir']}/wsgi.py" do
-#     content "def app(env, start_response):
-#     start_response('200 OK', [('Content-Type','text/html')])
-#     return [b'Hello Thena\\n']"
-#     owner node['thena-infra']['uwsgi_user']
-#     group node['thena-infra']['uwsgi_group']
-# end
-# ## / END TESTING
 
-service 'myapp' do
+service "flasky" do
   provider Chef::Provider::Service::Upstart
   supports :status => true
   action [:restart]
 end
 
-service 'nginx' do
+service "nginx" do
   action :restart
 end

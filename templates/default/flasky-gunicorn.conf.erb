@@ -1,4 +1,4 @@
-description "Gunicorn application server running myapp"
+description "Gunicorn application server running flasky"
 
 start on runlevel [2345]
 stop on runlevel [!2345]
@@ -7,5 +7,5 @@ respawn
 setuid <%= node['flasky-cookbook']['gunicorn_user'] %>
 setgid <%= node['flasky-cookbook']['gunicorn_group'] %>
 
-chdir <%= node['flasky-cookbook']['project_dir'] %>
-exec gunicorn --workers 3 --bind unix:<%= node['flasky-cookbook']['gunicorn_socket'] %> -m 007 wsgi
+chdir <%= node['flasky-cookbook']['app_dir'] %>
+exec gunicorn --workers 3 --bind unix:<%= node['flasky-cookbook']['gunicorn_socket'] %> -m 007 manage:app
