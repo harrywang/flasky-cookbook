@@ -23,6 +23,11 @@ exec gunicorn --workers 3 --bind unix:<%= node['flasky-cookbook']['gunicorn_sock
 
 6. use env to add environment variables to gunicorn in the flasky-gunicorn.conf.erb file. These variables are only visible to the gunicorn process, you can use `ps -aux|grep gunicorn` to find the pid and check the variables using `cat /proc/{pid}/environ`, `printenv` won't show those variables.
 
+    env MAIL_SERVER='email-smtp.us-east-1.amazonaws.com'
+    env MAIL_USERNAME='yourusername'
+    env MAIL_PASSWORD='yourpassword'
+    env FLASK_ADMIN='youremail@gmail.com'
+
 Other useful notes:
 - to see the changes at  http://127.0.0.1:8888 in local browser, the cache needs to be cleaned.
 - to check upstart log: `cd /var/log/upstart/`
