@@ -21,11 +21,7 @@ exec gunicorn --workers 3 --bind unix:<%= node['flasky-cookbook']['gunicorn_sock
 
 5. Change sqlite database permission - we use vagrant:www_data to start gunicorn so that we need to assign vagrant:www_data to the database file and its parent folder (refer to this article for Unix permissions: http://kronosapiens.github.io/blog/2015/08/11/understanding-unix-permissions.html) - somehow I have to have two separate execute blocks otherwise only the second one is executed.
 
-TODO: I am not sure how to pass environment variables to test kitchen yet: the following hack does not work
-
-Add environment variables by `kitchen login` >> `export MAIL_USERNAME='your gmail username'`
- `export MAIL_PASSWORD='your gmail password'` and `export FLASK_ADMIN='youremail@yourcompany.com'`, then you can use `printenv` to check
-
+6. use env to add environment variables to gunicorn in the flasky-gunicorn.conf.erb file. These variables are only visible to the gunicorn process, you can use `ps -aux|grep gunicorn` to find the pid and check the variables using `cat /proc/{pid}/environ`, `printenv` won't show those variables.
 
 Other useful notes:
 - to see the changes at  http://127.0.0.1:8888 in local browser, the cache needs to be cleaned.
