@@ -28,7 +28,9 @@ exec gunicorn --workers 3 --bind unix:<%= node['flasky-cookbook']['gunicorn_sock
     env MAIL_PASSWORD='yourpassword'
     env FLASK_ADMIN='youremail@gmail.com'
 
-7. when ready, `berks package`, upload the tarball to S3 and apply to OpsWorks
+7. when ready for OpsWorks, first change `default['flasky-cookbook']['gunicorn_user'] = 'ubuntu'`,then `berks package`, upload the tarball to S3 and apply to OpsWorks.
+
+
 Other useful notes:
 - to see the changes at  http://127.0.0.1:8888 in local browser, the cache needs to be cleaned.
 - to check upstart log: `cd /var/log/upstart/`
