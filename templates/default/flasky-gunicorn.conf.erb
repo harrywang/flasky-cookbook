@@ -7,6 +7,11 @@ respawn
 setuid <%= node['flasky-cookbook']['gunicorn_user'] %>
 setgid <%= node['flasky-cookbook']['gunicorn_group'] %>
 
+env MAIL_SERVER="email-smtp.us-east-1.amazonaws.com"
+env MAIL_USERNAME="yourusername"
+env MAIL_PASSWORD="yourpassword"
+env FLASK_ADMIN="youremail@gmail.com"
+
 chdir <%= node['flasky-cookbook']['app_dir'] %>
 
 exec gunicorn --workers 3 --bind unix:<%= node['flasky-cookbook']['gunicorn_socket'] %> -m 007 --log-file <%= node['flasky-cookbook']['gunicorn_logfile']%> manage:app

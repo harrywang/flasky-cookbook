@@ -21,14 +21,16 @@ exec gunicorn --workers 3 --bind unix:<%= node['flasky-cookbook']['gunicorn_sock
 
 5. Change sqlite database permission - we use vagrant:www_data to start gunicorn so that we need to assign vagrant:www_data to the database file and its parent folder (refer to this article for Unix permissions: http://kronosapiens.github.io/blog/2015/08/11/understanding-unix-permissions.html) - somehow I have to have two separate execute blocks otherwise only the second one is executed.
 
-6. use env to add environment variables to gunicorn in the flasky-gunicorn.conf.erb file. These variables are only visible to the gunicorn process, you can use `ps -aux|grep gunicorn` to find the pid and check the variables using `cat /proc/{pid}/environ`, `printenv` won't show those variables.
+6. use env to add environment variables to gunicorn in the flasky-gunicorn.conf.erb file. These variables are only visible to the gunicorn process, you can use `ps -aux|grep gunicorn` to find the pid and check the variables using `cat /proc/{pid}/environ`, `printenv` won't show those variables. Also make sure you use DOUBLE QUOTES for variable values - this took me more than a whole day to figure out - ouch!
 
-    env MAIL_SERVER='email-smtp.us-east-1.amazonaws.com'
-    env MAIL_USERNAME='yourusername'
-    env MAIL_PASSWORD='yourpassword'
-    env FLASK_ADMIN='youremail@gmail.com'
+    env MAIL_SERVER="email-smtp.us-east-1.amazonaws.com"
+    env MAIL_USERNAME="yourusername"
+    env MAIL_PASSWORD="yourpassword"
+    env FLASK_ADMIN="youremail@gmail.com"
 
 7. when ready for OpsWorks, first change `default['flasky-cookbook']['gunicorn_user'] = 'ubuntu'`,then `berks package`, upload the tarball to S3 and apply to OpsWorks.
+
+8. NOTE: If you set OpsWorks to use Elastic IP - then if you use EIP in your browser, the default Nginx page will show up - DON'T KNOW WHY!! (my question on StackOverflow: http://stackoverflow.com/questions/35047766/nginx-does-not-serve-the-flask-pages-and-shows-the-default-static-page?noredirect=1#comment57854202_35047766) - you have to use the corresponding PUBLIC DNS to access for this to work. 
 
 
 Other useful notes:

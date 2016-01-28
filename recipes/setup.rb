@@ -40,6 +40,12 @@ link '/etc/nginx/sites-enabled/flasky' do
   to '/etc/nginx/sites-available/flasky'
 end
 
+# Remove the default nginx site if any
+file '/etc/nginx/sites-enabled/default' do
+  action :delete
+  only_if { ::File.exists?("/etc/nginx/sites-enabled/default") }
+end
+
 # set up logging
 # nginx
 file node['flasky-cookbook']['nginx_logfile'] do

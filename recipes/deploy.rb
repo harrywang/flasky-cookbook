@@ -1,3 +1,19 @@
+app = search(:aws_opsworks_app).first
+
+# remove the code folder if exists
+directory node['flasky-cookbook']['app_dir'] do
+  recursive true
+  action :delete
+  only_if { ::File.directory?("#{node['flasky-cookbook']['app_dir']}") }
+end
+
+# Get the app code from Github
+execute "get flasky code" do
+    user "root"
+    cwd node['flasky-cookbook']['project_root']
+    command "git clone #{app['app_source']['url']}"
+end
+
 execute "install flasky requirements" do
     user "root"
     cwd node['flasky-cookbook']['app_dir']
@@ -12,12 +28,12 @@ end
 
 execute "change sqlite database parent folder permission" do
     user "root"
-    command "chown vagrant:www-data #{node['flasky-cookbook']['app_dir']}"
+    command "chown #{node['flasky-cookbook']['gunicorn_user']}:#{node['flasky-cookbook']['nginx_group']} #{node['flasky-cookbook']['app_dir']}"
 end
 
 execute "change sqlite database permission" do
     user "root"
-    command "chown vagrant:www-data #{node['flasky-cookbook']['app_dir']}/data-dev.sqlite"
+    command "chown #{node['flasky-cookbook']['gunicorn_user']}:#{node['flasky-cookbook']['nginx_group']} #{node['flasky-cookbook']['app_dir']}/data-dev.sqlite"
 end
 
 service "flasky" do
