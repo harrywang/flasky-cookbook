@@ -34,6 +34,24 @@ exec gunicorn --workers 3 --bind unix:<%= node['flasky-cookbook']['gunicorn_sock
 
 9. NOTE: If you set OpsWorks to use Elastic IP - then if you use EIP in your browser, the default Nginx page will show up - DON'T KNOW WHY!! (my question on StackOverflow: http://stackoverflow.com/questions/35047766/nginx-does-not-serve-the-flask-pages-and-shows-the-default-static-page?noredirect=1#comment57854202_35047766) - you have to use the corresponding PUBLIC DNS to access for this to work.
 
+10. Got to Flasky repo >> settings >> Add service and choose OpsWorks, go to AWS IAM, create a user, e.g., opsworks-flasky, give at least the following permissions:
+```json
+{
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "opsworks:CreateDeployment",
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "opsworks:UpdateApp",
+      "Resource": "*"
+    }
+  ]
+}
+```
+Enter information for App, Stack, Branch name (master), access key, secret access key and add the service. Now, the code will be automatically deployed every time a new commit is pushed to master branch.
 
 Other useful notes:
 - to see the changes at  http://127.0.0.1:8888 in local browser, the cache needs to be cleaned.
