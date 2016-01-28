@@ -28,9 +28,11 @@ exec gunicorn --workers 3 --bind unix:<%= node['flasky-cookbook']['gunicorn_sock
     env MAIL_PASSWORD="yourpassword"
     env FLASK_ADMIN="youremail@gmail.com"
 
-7. when ready for OpsWorks, first change `default['flasky-cookbook']['gunicorn_user'] = 'ubuntu'`,then `berks package`, upload the tarball to S3 and apply to OpsWorks.
+7. Special note for AWS SES: you have to verify domains and emails for different regions separately AND the FLASKY_MAIL_SENDER has to be verified before you can use SES to send out emails.
 
-8. NOTE: If you set OpsWorks to use Elastic IP - then if you use EIP in your browser, the default Nginx page will show up - DON'T KNOW WHY!! (my question on StackOverflow: http://stackoverflow.com/questions/35047766/nginx-does-not-serve-the-flask-pages-and-shows-the-default-static-page?noredirect=1#comment57854202_35047766) - you have to use the corresponding PUBLIC DNS to access for this to work. 
+8. when ready for OpsWorks, first change `default['flasky-cookbook']['gunicorn_user'] = 'ubuntu'`,then `berks package`, upload the tarball to S3 and apply to OpsWorks.
+
+9. NOTE: If you set OpsWorks to use Elastic IP - then if you use EIP in your browser, the default Nginx page will show up - DON'T KNOW WHY!! (my question on StackOverflow: http://stackoverflow.com/questions/35047766/nginx-does-not-serve-the-flask-pages-and-shows-the-default-static-page?noredirect=1#comment57854202_35047766) - you have to use the corresponding PUBLIC DNS to access for this to work.
 
 
 Other useful notes:
