@@ -10,7 +10,7 @@ setgid <%= node['flasky-cookbook']['gunicorn_group'] %>
 env MAIL_SERVER="email-smtp.us-east-1.amazonaws.com"
 env MAIL_USERNAME="yourusername"
 env MAIL_PASSWORD="yourpassword"
-env FLASK_ADMIN="youremail@gmail.com"
+env FLASKY_ADMIN="youremail@gmail.com"
 
 chdir <%= node['flasky-cookbook']['app_dir'] %>
 

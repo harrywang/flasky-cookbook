@@ -26,7 +26,7 @@ exec gunicorn --workers 3 --bind unix:<%= node['flasky-cookbook']['gunicorn_sock
     env MAIL_SERVER="email-smtp.us-east-1.amazonaws.com"
     env MAIL_USERNAME="yourusername"
     env MAIL_PASSWORD="yourpassword"
-    env FLASK_ADMIN="youremail@gmail.com"
+    env FLASKY_ADMIN="youremail@gmail.com"
 
 7. Special note for AWS SES: you have to verify domains and emails for different regions separately AND the FLASKY_MAIL_SENDER has to be verified before you can use SES to send out emails.
 
